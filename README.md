@@ -1,23 +1,20 @@
 # DenpaEditor
+
 Comprehensive Editor for the 3DS Title "The Denpa Men: They Came by Wave"
 
-**Important:** You need your own **legally obtained copy of The Denpa Men: They Came by Wave — USA**, as a **decrypted `.3ds`/`.cci` ROM** or **decrypted standalone `.cxi`/`.app` application**. No ROM is included. `.cia` files are not supported.
+**Important:** You need your own **legally obtained copy of The Denpa Men: They Came by Wave (USA)**, with an **already decrypted application** in a `.3ds`/`.cci` ROM or standalone `.cxi`/`.app` file. No ROM is included. `.cia` files are not supported.
 
 A Windows ROM editor for items, characters, enemies, dungeons and more. Create custom variants and share your changes as **BPS patches**.
 
-
-<img width="1910" height="1030" alt="image" src="https://github.com/user-attachments/assets/78e3c005-4c42-4559-bcbd-b716fc9413b7" />
-
-
-<!-- Add an editor overview screenshot here. -->
+<img width="1910" height="1030" alt="DenpaEditor dungeon view with textures, objects and encounter markers" src="https://github.com/user-attachments/assets/78e3c005-4c42-4559-bcbd-b716fc9413b7" />
 
 ## Getting started
 
 1. Keep an untouched, decrypted ROM as your **clean source**.
 2. Make a separate copy to edit.
 3. Run **DenpaEditor.exe** on 64-bit Windows and choose **Files → Open ROM**.
-4. Open your working copy, then select the database, dungeon, island or asset page you want to use.
-5. Save your edits. Database, island and audio pages have Save/Reset controls; supported dungeon placement and painting operations save automatically.
+4. Open your working copy, then select **Database**, **Dungeons** or **Island**.
+5. Save your edits. Database and island pages have Save/Reset controls; supported dungeon placement and painting operations save automatically.
 6. To share your changes, choose **Export BPS**, select the clean source ROM first, then choose where to write the patch.
 
 Saving changes the opened working ROM directly. There is no separate project file. Reopen that ROM to continue editing.
@@ -30,7 +27,6 @@ The EXE runs without a separate .NET installation.
 - [Database](#database)
 - [Dungeons](#dungeons)
 - [Island and overworld](#island-and-overworld)
-- [Graphical and audio assets](#graphical-and-audio-assets)
 - [Saving and BPS patches](#saving-and-bps-patches)
 - [Controls](#controls)
 - [Catalogs and capacity limits](#catalogs-and-capacity-limits)
@@ -43,10 +39,9 @@ The EXE runs without a separate .NET installation.
 | Tab | Features |
 | --- | --- |
 | **Files** | Open ROMs, inspect the ROM summary and export BPS patches. |
-| **Database** | Items, Denpa Men, Shop Data, Enemies and Meta starting settings. |
+| **Database** | Original and custom items, Denpa Men and antennas, Shop Data, Enemies and Meta starting settings. |
 | **Dungeons** | Floor names, terrain, objects, roaming encounters, events, battles, teleports, effects and music. |
 | **Island** | Home island and ship-map previews, editable destinations and progression-rule inspection. |
-| **Assets** | Original graphical resources, model animation previews, audio export and supported audio replacement. |
 
 Database pages use a selectable list on the left and details on the right. Search, category filters and original previews are available where mapped.
 
@@ -55,17 +50,17 @@ Database pages use a selectable list on the left and details on the right. Searc
 - Open NCSD `.3ds`/`.cci`, standalone NCCH `.cxi`/`.app`, and supported decrypted IVFC or level-3 RomFS images.
 - View the filename, title ID, container format and access status.
 - Detect readable plaintext even when old encryption flags still mark it as encrypted.
+- Require readable application ExeFS/RomFS and a valid plaintext extended header. The editor has no key input or ROM decryption support.
+- Preserve secondary NCSD partition contents unchanged, including partitions that remain encrypted.
 - Decode the game's archives and compressed resources for the editor.
 - Preserve unrelated resources and unknown record bytes when supported fields are saved.
 - Export a BPS patch containing both data edits and required engine changes.
 
 ## Database
 
-<!-- Add database screenshots here. -->
-
 ### Items, consumables and key items
 
-- Browse all **298 item records**, including the reserved Dummy entries.
+- Browse the **298 original item slots**, including reserved Dummy entries and any custom items saved into eligible slots.
 - Filter by **Consumables**, **Key items**, **Equipment**, **Accessories** or **Clothes**.
 - Search by item name or ID.
 - Edit supported names, descriptions, buy prices and sell prices.
@@ -98,6 +93,22 @@ Equipment has **General**, **Element resistance**, **Status protection**, **Atta
 
 Changing a slot or appearance does not migrate equipment already worn in an existing player save; re-equip affected items in-game.
 
+### Custom items and clothing textures
+
+In **Database → Items**, select a consumable, accessory or outfit and choose **New custom** to use it as a template.
+
+- Create an item with its own name, description and prices.
+- Give custom accessories and clothes independent equipment stats and effects.
+- Configure custom consumables using existing native effect presets and field/battle permissions.
+- Use saved custom items in Shop Data, starting inventory, enemy drops, dungeon chests and NPC gifts.
+- Export an original or custom clothing texture with **Export PNG**.
+- Replace a custom outfit's texture with **Import PNG** and preview it on the original model.
+- Save item and texture changes together, or Reset unsaved changes.
+
+Custom items use eligible unused slots within the original 298-slot inventory. They do not expand or renumber inventory IDs. Accessories and clothes also share spare equipment capacity; creation becomes unavailable when compatible slots run out. Key-item creation and new independent consumable effect scripts are not supported. Editing a shared consumable effect still changes other items using that preset.
+
+Clothing PNGs are texture atlases, so keep the exported UV layout. Imports preserve the whole canvas, resize it to the template's dimensions and rebuild its mipmaps. The original texture format is retained; an opaque outfit does not gain transparency. PNGs are limited to **8 MB** and **2048 × 2048 pixels**. Importing a texture does not create a new clothing mesh.
+
 ### Denpa Men
 
 Denpa Men has **Antenna**, **Color**, **Face**, **Name**, **Presets** and **Level Curve** pages.
@@ -105,11 +116,28 @@ Denpa Men has **Antenna**, **Color**, **Face**, **Name**, **Presets** and **Leve
 #### Antennas
 
 - Browse **115 antenna definitions** with original models, atlas icons and character samples.
+- Change attack elements, buff/status effects and cure conditions through dropdowns.
 - Edit supported descriptions, AP costs, targets and power.
 - View native growth stages at 70%, 100% and 150% size.
 - Configure evolution levels from 1–99 while keeping stages in ascending order.
 - Use the native **All AP** setting where supported.
-- Preserve the antenna group's original stage structure.
+- Edit **Chain**, **Predecessor** and **Successor** links, with up to **four forms** in a supported evolution chain.
+
+#### Custom antennas and artwork
+
+- Choose original 3D shapes, 2D symbols, Ring and Small/Normal/Large artwork sizes.
+- Use **Upload PNG** for a private antenna symbol without replacing the shared original atlas.
+- Choose an original antenna animation or an adapted general enemy attack presentation.
+- Create up to **104 custom antenna definitions** with **New Custom**.
+- Give each custom antenna its own name, description and battle label.
+- Change its underlying ability with **Template**, while retaining its identity and artwork.
+- Link custom antennas into evolution chains and select them in Denpa Men presets.
+- Delete unused custom definitions after removing their evolution links.
+- Save definitions, text, private artwork and required runtime changes together.
+
+Uploaded antenna PNGs are limited to **8 MB** and **2048 × 2048 pixels**. Transparent margins are cropped, and the visible artwork is fitted proportionally into the native atlas cell. Upload selects Normal size; other size choices remain available afterward. The Animation selector changes presentation while retaining the antenna's gameplay settings. It does not import new 3D models or animation files, and the editor preview does not simulate spell particles.
+
+Selecting a custom antenna for a preset creates an independent family available from level 1. Evolution-link edits can change abilities for existing members of the affected family; preset choices apply when new characters are created.
 
 #### Colors and custom colors
 
@@ -164,7 +192,7 @@ Prices come from the committed item database. The **New** marker follows native 
 
 ### Enemies
 
-Enemies has **General**, **Elemental Attributes** and **Attacks** pages.
+Enemies has **General**, **Elemental Attributes**, **Attacks** and **Item drops** pages.
 
 #### Existing enemy definitions
 
@@ -174,7 +202,7 @@ Enemies has **General**, **Elemental Attributes** and **Attacks** pages.
 - Set level, EXP and gold.
 - Edit native Min/Max ranges for HP, Attack, Defense and Speed, plus evasion.
 - Set Ghost type, Double action and HP recovery traits.
-- Edit Fire, Water, Ice, Earth, Wind and Light weakness, resistance and immunity levels.
+- Edit Fire, Water, Ice, Earth, Wind and Light weakness, resistance and immunity levels, plus Dark when its required runtime extension is available.
 - View the original body, texture, skeleton and linked model parts.
 - Configure field **Roaming behavior** as **Chase** or **Run away**.
 - Keep roaming behavior separate from battle attacks.
@@ -185,6 +213,7 @@ Molar, Golden Fang and Incisor use Run away in the original data. Original battl
 #### Attacks and motion previews
 
 - Configure **six attack slots** per enemy using existing moves or None.
+- Use green/yellow/red compatibility dots to distinguish usable moves, missing motions and restricted actions.
 - Edit supported physical, ranged, status and healing effect modules.
 - Choose native ally/opponent and single/all target settings.
 - Set an attack's element, including Dark and Light, or None.
@@ -195,9 +224,19 @@ Molar, Golden Fang and Incisor use Run away in the original data. Original battl
 - Inspect verified follow-up, charging and transformation dependencies.
 - Preview the enemy's mapped normal and charged motions with Play, Stop, Loop and frame scrubbing.
 
-Special actions such as fleeing, calling allies, charging and boss transformations retain their native handlers. Their original presets remain selectable, but arbitrary copies of those scripts are not authored.
+Special actions retain their native handlers. Transformations and ally calls remain available to their verified original users; general moves can be assigned even when the selected model lacks their motion. Arbitrary copies of native scripts are not authored.
 
 Motion previews show the original enemy assembly; they do not simulate a complete battle, target effects, sounds or cameras.
+
+#### Item drops
+
+- Edit both independent drop slots for each enemy battle definition.
+- Select an original or saved custom item, or **None** to clear a slot.
+- Choose from the opened ROM's native chance settings.
+- Save or Reset drops with the enemy's other settings.
+- Edit a custom enemy's inherited drops independently of its template.
+
+Each slot rolls independently, so both items can drop. Original chance settings include 100%, 25%, 12.5%, 6.25%, 3.125%, 1.5625%, 0.3906% and 0.0061%; these are native tiers, not arbitrary percentages. Grand King's separate compiled reward is displayed as a fixed drop and is outside the two editable slots.
 
 #### Custom enemies and recoloring
 
@@ -230,7 +269,7 @@ Configure a fresh game's initial state:
 - Set each member's level from **1–99**.
 - Set starting gold from **0–999,999**.
 - Add starting inventory with quantities from **0–99**.
-- Configure supported starting facilities: House, Docks, Shop, Museum, Digitoll PC and Spirit Shrine.
+- Configure supported starting facilities: House, Docks, Shop, Museum, Digitoll Cave, PC and Spirit Shrine.
 - Set **Antenna Tower** availability.
 - Enable **Skip intro** for the opening recruitment sequence.
 - Choose no ship, Raft, Small Boat or Cruiser.
@@ -247,8 +286,6 @@ Crystal's native recruitment remains linked to the guarded Cruiser/ending comple
 
 ## Dungeons
 
-<!-- Add floor building, object placement and event screenshots here. -->
-
 Browse original and custom dungeons in a textured OpenGL scene. The editing panel has **Build**, **Objects**, **Enemies**, **Events**, **Teleports**, **Effects** and **Music** tabs.
 
 ### Viewing floors and floor names
@@ -259,6 +296,7 @@ Browse original and custom dungeons in a textured OpenGL scene. The editing pane
 - Edit that name, independently of the editor's floor number.
 - Save name changes with Enter or focus loss; use Escape to reset the edit.
 - View textures, collision, objects, enemies, teleports and events through layer controls.
+- Toggle **X/Z** coordinates and **Rooms** outlines on supported layouts.
 - Select a spatial record from its list or by clicking its scene marker.
 - Keep the active category visible and synchronize scene/list selection.
 - Resize the scene and editing panels.
@@ -312,6 +350,7 @@ The Enemies panel separates **Roaming**, **Spawns**, **Companion** and **Static*
 - Use original-model enemy thumbnails.
 - Add supported stored-cell spawn overrides.
 - Configure generated-room spawn overrides and suppression.
+- Select a CSV room and highlight its boundaries before assigning a room spawn.
 - Delete supported pools or overrides.
 - Keep private floor changes from altering another floor's shared pool.
 - Retain enemy database level and stats separately from encounter settings.
@@ -328,18 +367,19 @@ Generated roaming positions depend on the game's live placement/RNG. The editor 
 - Edit supported fixed formations using up to five enemy/count slots.
 - Insert, delete or reorder **Stage intro** commands at all **11 main dungeon entrances**.
 - Preserve required native entrance sequences and camera flow.
-- Preview the supported stage-intro HUD separately in Assets.
+- Preview the supported stage-intro HUD within the Events command editor.
 - Edit Guardian Tower's final **Rook**, **Queen** and **King** formations separately.
 - Add fixed enemy-proximity battles through Events or Enemies → Static.
 - Select their formation and supported placement, then move or delete them.
-- Use native completion flags and victory-only animated disappearance.
+- Play the native defeat animation, effects and sounds before clearing a placed enemy after victory.
+- Clear its body, shadow and collision while preserving completion on re-entry.
 - Retry added battles after loss or escape.
 
 Supported floors can have **two new proximity battles**. These events use private scenario/formation records and share existing completion capacity with custom NPCs. They do not create arbitrary chapter milestones or new boss camera scripts.
 
 **Dark Ruins support** includes the orb gate and dwarf guides, required orb conditions, Grand King's first encounter/rematch/victory events on Floor 8, the original boss actor, and the mapped ending dialogue. The ending links cover Crystal's rescue, the credits, automatic island return, Cruiser construction, guarded Crystal recruitment and the post-credits thank-you scene. The native conditional awards are shown as **Evil Emblem ×1**, **Cruiser Parts ×1** and **Room Parts ×1**.
 
-These are mapped native events and awards, not a general enemy loot editor. The editor exposes their records and dialogue; it does not play the cutscenes or credits.
+These are mapped native events and awards. Regular enemy drops are edited separately in **Database → Enemies → Item drops**. The event editor exposes the mapped records and dialogue; it does not play the cutscenes or credits.
 
 ### Gates, stairs, holes and warps
 
@@ -350,6 +390,7 @@ These are mapped native events and awards, not a general enemy loot editor. The 
 - Create one-way or round-trip links where supported.
 - Keep holes one-way.
 - Redirect existing links with **Destination → Apply**.
+- Set a custom overworld entrance gate's facing with **Direction → Apply**.
 - Move/delete supported transitions and undo/redo those operations.
 - Use native depth rules and distinguish visible transitions from invisible arrivals.
 
@@ -371,6 +412,7 @@ Damage patches are generated previews, not individually editable stored scenery.
 
 - Create up to **three custom dungeon identities** without replacing original entries.
 - Start with a clean **5 × 5 entrance room** and original exit gate.
+- Choose a **North**, **East**, **South** or **West** entrance when creating a dungeon.
 - Name the custom dungeon.
 - Keep its linked default bottom-screen and entrance title text consistent.
 - Add clean **5 × 5 floors** to original or custom dungeons.
@@ -385,12 +427,11 @@ Some original entries share a floor bank, notably Guardian Tower D11/D12. Shared
 
 ## Island and overworld
 
-<!-- Add home island and ship destination screenshots here. -->
-
 ### Overworld previews and destination editing
 
 - Preview the home island with its original terrain, facilities and ship models.
 - View the original top-screen and touch-screen island/Docks layouts.
+- Edit facility titles and descriptions with Save/Reset controls.
 - Click Docks or Ship to browse travel destinations.
 - Select destinations through the list or map icons.
 - Preview no ship, Raft, Small Boat or Cruiser without changing the player's save.
@@ -400,7 +441,7 @@ Some original entries share a floor bank, notably Guardian Tower D11/D12. Shared
 - Change the destination dungeon and required ship level.
 - Choose from seven mapped original icons and world models.
 - Set separate map-icon positions for each supported ship layout.
-- Drag icons within their native screen bounds; cancel a drag with Escape.
+- In the Ship preview, drag destination icons within their native screen bounds; cancel a drag with Escape.
 - Edit top-screen world-model position.
 - Add up to **three destinations**, for a maximum of **13 slots**.
 - Delete original/custom destinations and reuse deleted slots without shifting the remaining identities.
@@ -420,60 +461,12 @@ These are fitted editor composites. They do not reproduce the entire live island
 
 This page is a **read-only view of ROM progression rules**, not current values from a player's save. Supported new-game initialization is edited in Database → Meta.
 
-## Graphical and audio assets
-
-<!-- Add graphical browser, animation and audio screenshots here. -->
-
-### Graphical browser
-
-- Browse **All, GUI, HUD, Player, Enemies, Stages, Effects, Scenes and Other** categories.
-- Switch between mapped **Preview** composites and **Raw assets**.
-- Search original resource names/IDs and filter raw resource types.
-- Inspect models, textures, animations, layouts, fonts and other graphics records.
-- View decoded textures and original glyph/font pages.
-- View supported palettes and menu-banner graphics.
-- Rotate and zoom mapped original models.
-- Assemble supported player/enemy bodies, skeletons and attached parts.
-- Play compatible skeletal animations with Stop, Loop and frame scrubbing.
-- Select a compatible raw model/clip combination and preview frame rates.
-- Preview supported player/enemy composite animations at their mapped rates.
-- Preview the native stage-intro HUD, linked title/subtitle and fades.
-
-The documented US scan contains **4,578 indexed graphical objects**. Names can include unused or duplicate resources.
-
-The general graphical browser is read-only. Generic material/layout/camera animations, procedural particle systems and unmapped transforms are not fully simulated. There is no general mesh, texture, font or animation import/export UI; custom color/enemy texture changes use their dedicated database tools.
-
-### Audio browser, export and replacement
-
-- Browse **All**, **BGM**, **Effects** and **Samples**.
-- Search names and source resources.
-- Inspect format, channel count, sample rate, length and loop metadata.
-- Identify entries sharing the same underlying payload.
-- Browse the original **25 BGM entries**, **239 effects/jingles** and **840 waveform samples**.
-- Export supported streamed music and waveform samples as WAV or native files.
-- Export native sequences with a dependency ZIP containing banks, wave archives and a manifest.
-- Replace supported streams/samples with compatible WAV or native audio.
-- Replace sequences with compatible native sequence data.
-- Preview replacement metadata as a draft.
-- Save or Reset audio drafts while preserving drafts in other sections.
-- Export the currently selected draft before committing it.
-
-| Resource | Export | Replacement |
-| --- | --- | --- |
-| Streamed music | WAV or native BCSTM | Compatible WAV or native BCSTM |
-| Waveform sample | WAV or native BCWAV | Compatible WAV or native BCWAV |
-| Sequence | Native BCSEQ; dependency bundle | Compatible native BCSEQ |
-
-WAV import supports PCM 8/16/24/32-bit and 32-bit float at **4–192 kHz**, preserving the original channel count. Supported imports are encoded to native DSP ADPCM, so conversion is lossy. Forward-loop information is retained where supported, with native alignment requirements.
-
-The browser does not play audio or synthesize sequences. It does not convert sequences to WAV/MP3/MIDI, edit instrument banks or add new sound IDs. Replacing a shared payload affects every alias using it. The sample count includes instrument waveforms, not 840 separately named sound effects.
-
 ## Saving and BPS patches
 
 ### Direct ROM saving
 
 - Save directly to the opened ROM, without a workspace/project sidecar.
-- Keep independent database/audio drafts while saving another section.
+- Keep independent database drafts while saving another section.
 - Reset a section to its last committed state.
 - Rebuild changed archives while preserving unrelated compressed resources.
 - Support resource growth and shrinkage.
@@ -482,9 +475,11 @@ The browser does not play audio or synthesize sequences. It does not convert seq
 - Preserve other NCSD partitions.
 - Check that the source ROM has not changed externally.
 - Validate a temporary sibling image before replacing the working ROM.
-- Recognize supported older editor patches and upgrade them during the relevant save.
+- Apply supported runtime updates during the relevant save.
 
 Supported dungeon operations save automatically and have undo/redo history. That history is not retained after reopening the ROM; operations that change external references can clear it.
+
+When **Update available** appears in **Database → Meta**, use **Save** to apply supported runtime updates while retaining the ROM's party, inventory and progression settings.
 
 Unrecognized executable modifications or incompatible concurrent edits are rejected rather than overwritten blindly.
 
@@ -504,7 +499,7 @@ The exporter checks source compatibility, verifies BPS checksums and reconstruct
 
 Both source and target are limited to **512 MiB**. Recipients need the exact source bytes used to create the patch. Compatibility checks do not independently prove that a selected ROM is pristine.
 
-There is no **Export 3DS Mod** or LayeredFS mod-package export. Audio dependency ZIPs are resource bundles, separate from ROM mod distribution.
+There is no **Export 3DS Mod** or LayeredFS mod-package export.
 
 ## Controls
 
@@ -547,12 +542,14 @@ Counts below describe the documented **stock US ROM**. Edited ROMs can differ.
 | Active enemy battle definitions | 110 |
 | Named enemy types | 91 |
 | Dungeon entries / selectable floor visits | 17 / 149 |
-| Indexed graphical objects | 4,578 |
-| BGM / effects and jingles / waveform samples | 25 / 239 / 840 |
 
 | Supported extension or editing limit | Capacity |
 | --- | --- |
 | Custom colors | 10 additional slots |
+| Custom antennas | 104 additional definitions |
+| Antenna evolution chain | Up to 4 forms |
+| Custom items | Eligible unused slots within the original 298-item inventory; equipment also needs spare equipment records |
+| Clothing and antenna PNG input | 8 MB; up to 2048 × 2048 pixels |
 | Custom enemy appearances | 164 additional slots in a stock ROM |
 | Additional private attack definitions | 23 simultaneous definitions, shared across the ROM |
 | Attack slots per enemy | 6 |
@@ -576,11 +573,12 @@ Custom transition/arrival capacity depends on installed runtime features because
 
 ### Game version and containers
 
-- Verified application: **The Denpa Men: They Came by Wave — US**.
+- Verified application: **The Denpa Men: They Came by Wave (USA)**.
 - Title ID: **00040000000A3100**.
 - Product code: **CTR-N-JD8E**.
 - Container reading supports NCSD, standalone NCCH and supported RomFS images.
 - Direct full-image editing requires a readable **decrypted application**, including its executable and extended header.
+- The editor does not decrypt ROMs or accept encryption keys. Secondary NCSD partition contents can remain encrypted and are preserved unchanged.
 - Standalone RomFS inputs lack executable/header data needed for engine extensions.
 - Other regions or revisions are not automatically supported by the verified US mappings.
 - **CIA import/export is not implemented.**
@@ -593,11 +591,11 @@ Saving rebuilds supported decrypted images; it cannot regenerate Nintendo's reta
 - Unknown fields and unsupported scripts remain preserved.
 - Procedural dungeon generation is not an authoring tool in the editor.
 - Authored map geometry cannot be replaced with imported meshes or newly authored tilesets.
-- General model, animation and texture imports are not implemented.
+- General model and animation imports are not implemented. PNG texture changes are limited to custom clothes and supported antenna artwork.
 - Arbitrary cutscene compilation, camera scripting and new chapter-clear logic are not implemented.
-- General item creation and enemy item-drop table editing are not implemented.
+- Custom item creation is limited to eligible native inventory/equipment slots and existing effect types. New key items and independent consumable effect scripts are not implemented.
 - Runtime-generated encounter positions and full battle/field AI are not simulated in previews.
-- Asset animation and scene previews cover verified mappings rather than every renderer feature.
+- Database motion and dungeon/island previews cover verified mappings rather than every renderer feature.
 
 ## Credits
 
