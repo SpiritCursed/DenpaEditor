@@ -6,7 +6,8 @@ Comprehensive Editor for the 3DS Title "The Denpa Men: They Came by Wave"
 
 A Windows ROM editor for items, characters, enemies, dungeons and more. Create custom variants and share your changes as **BPS patches**.
 
-<img width="1910" height="1030" alt="DenpaEditor dungeon view with textures, objects and encounter markers" src="https://github.com/user-attachments/assets/78e3c005-4c42-4559-bcbd-b716fc9413b7" />
+<img width="1909" height="1027" alt="image" src="https://github.com/user-attachments/assets/490e213b-0200-40e3-8b39-9ce49a086108" />
+
 
 ## Getting started
 
@@ -79,6 +80,9 @@ Items without verified individual artwork use category symbols. Clothing uses it
 
 Equipment has **General**, **Element resistance**, **Status protection**, **Attack elements** and **Effects** pages.
 
+<img width="1909" height="1025" alt="image" src="https://github.com/user-attachments/assets/68f7e726-25ed-479f-85f3-a99c8f0460a8" />
+
+
 - Edit HP, AP, Attack, Defense, Speed and evasion bonuses within their native storage ranges.
 - Edit resistance to Fire, Water, Ice, Earth, Wind and Darkness.
 - Configure protection against Poison, Fatal, Burn, Sleep, Paralysis, Frozen and Blind.
@@ -125,6 +129,9 @@ Denpa Men has **Antenna**, **Color**, **Face**, **Name**, **Presets** and **Leve
 
 #### Custom antennas and artwork
 
+<img width="1911" height="1025" alt="image" src="https://github.com/user-attachments/assets/1d74474a-0228-41d2-b81f-8cacfdcfc804" />
+
+
 - Choose original 3D shapes, 2D symbols, Ring and Small/Normal/Large artwork sizes.
 - Use **Upload PNG** for a private antenna symbol without replacing the shared original atlas.
 - Choose an original antenna animation or an adapted general enemy attack presentation.
@@ -140,6 +147,9 @@ Uploaded antenna PNGs are limited to **8 MB** and **2048 × 2048 pixels**. Trans
 Selecting a custom antenna for a preset creates an independent family available from level 1. Evolution-link edits can change abilities for existing members of the affected family; preset choices apply when new characters are created.
 
 #### Colors and custom colors
+
+<img width="1912" height="1021" alt="image" src="https://github.com/user-attachments/assets/27a3520c-6901-4abe-a2e9-e958b7e4b224" />
+
 
 - Browse **22 original solid and striped colors**.
 - Create up to **10 custom color slots**.
@@ -157,6 +167,9 @@ Color amounts are native signed values, not percentages. Profiles display the fi
 Custom colors do not expand random recruitment's color pool. Deleting a color resets affected editable presets to White; already recruited users of that slot display White until the slot is reused.
 
 #### Faces, names and presets
+
+<img width="1917" height="1026" alt="image" src="https://github.com/user-attachments/assets/7d255cc0-c1aa-407b-a15b-f9b4def42b05" />
+
 
 - Browse **169 face choices** across head, eyes, brows, nose, mouth, cheeks, glasses, skin and hair groups.
 - View original character samples for supported choices.
@@ -241,6 +254,9 @@ Each slot rolls independently, so both items can drop. Original chance settings 
 #### Custom enemies and recoloring
 
 Select an enemy and choose **New custom** to use it as a template.
+
+<img width="1910" height="1029" alt="image" src="https://github.com/user-attachments/assets/71908f8f-8865-49fa-adc7-70fb79deb033" />
+
 
 - Create an independent name, battle definition, appearance and private texture.
 - Clone an original enemy or another custom enemy.
@@ -409,6 +425,9 @@ Blue warps retain entrance/re-entry behavior, including supported custom-dungeon
 Damage patches are generated previews, not individually editable stored scenery. Ambient previews approximate mapped emitters. Music selection does not provide audio playback.
 
 ### Custom dungeons and floors
+
+<img width="1911" height="1023" alt="image" src="https://github.com/user-attachments/assets/27a4e164-6baf-43ed-8012-d244ffd18948" />
+
 
 - Create up to **three custom dungeon identities** without replacing original entries.
 - Start with a clean **5 × 5 entrance room** and original exit gate.
